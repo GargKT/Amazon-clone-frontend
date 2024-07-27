@@ -84,48 +84,56 @@ export function loadProductsFetch() {
   const promise = fetch('https://supersimplebackend.dev/products').then((response) => {
     return response.json();
   }).then((productsData) => {
-      products = productsData.map((productDetails) => {
+    products = productsData.map((productDetails) => {
 
-        if (productDetails.type === 'clothing') {
-          return new Clothing(productDetails);
-        }
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      }
 
-        if (productDetails.type === 'appliance') {
-          return new Appliance(productDetails);
-        }
-        return new Product(productDetails);
-      });
-      console.log('load products');
-  });
+      if (productDetails.type === 'appliance') {
+        return new Appliance(productDetails);
+      }
+      return new Product(productDetails);
+    });
+
+    console.log('load products');
+  }).catch(() => {
+    console.log('unexpected error! please try again later!');
+  })
   return promise;
 }
 
 loadProductsFetch();
 
-  export let products = [];
+export let products = [];
 
-  export function loadProducts(fun) {
-    const xhr = new XMLHttpRequest();
+export function loadProducts(fun) {
+  const xhr = new XMLHttpRequest();
 
-    xhr.addEventListener('load', () => {
-      products = JSON.parse(xhr.response).map((productDetails) => {
+  xhr.addEventListener('load', () => {
+    products = JSON.parse(xhr.response).map((productDetails) => {
 
-        if (productDetails.type === 'clothing') {
-          return new Clothing(productDetails);
-        }
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      }
 
-        if (productDetails.type === 'appliance') {
-          return new Appliance(productDetails);
-        }
-        return new Product(productDetails);
-      });;
-      console.log('load products');
-      fun();
-    });
+      if (productDetails.type === 'appliance') {
+        return new Appliance(productDetails);
+      }
+      return new Product(productDetails);
+    });;
 
-    xhr.open('GET', 'https://supersimplebackend.dev/products');
-    xhr.send();
-  }
+    console.log('load products');
+    fun();
+  });
+
+  xhr.addEventListener('error', () => {
+    console.log('unexpected error! please try again later!')
+  });  
+
+  xhr.open('GET', 'https://supersimplebackend.dev/products');
+  xhr.send();
+}
 
 
 /*
