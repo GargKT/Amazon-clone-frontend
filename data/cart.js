@@ -17,6 +17,11 @@ export function loadFromStorage() {
   }
 }
 
+export function resetCart() {
+  cart = [];
+  saveToStorage();
+}
+
 function saveToStorage(){
   localStorage.setItem('cart', JSON.stringify(cart));
 }
