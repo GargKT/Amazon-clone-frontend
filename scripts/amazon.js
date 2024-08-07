@@ -45,7 +45,7 @@ function renderProductsGrid() {
             </div>
 
             <div class="product-price">
-              $${formatCurrency(product.priceCents)} <!-- **Updated price format** -->
+              $${formatCurrency(product.priceCents)} <!-- **lalaUpdated price format** -->
             </div> 
 
             <div class="product-quantity-container">
